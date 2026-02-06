@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('username');
             $table->string('password');
-            $table->text('biography');
-            $table->timestamp('banned_at');
+            $table->text('biography')->nullable();
+            $table->timestamp('banned_at')->nullable();
             $table->timestamps();
         });
     }
