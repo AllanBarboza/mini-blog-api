@@ -25,4 +25,11 @@ class AdminFactory extends Factory
             'password' => Hash::make($password),
         ]);
     }
+
+    public function withUsername(string $username): static
+    {
+        return $this->state(fn() => [
+            'username' => $username,
+        ]);
+    }
 }
