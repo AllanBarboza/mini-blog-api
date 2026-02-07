@@ -14,7 +14,7 @@ class CreateUserTest extends TestCase
     public function test_user_can_be_created(): void
     {
         $payload = [
-            'name' => fake()->name,
+            'name' => fake()->name(),
             'username' => fake()->userName(),
             'password' => fake()->password(8),
         ];
