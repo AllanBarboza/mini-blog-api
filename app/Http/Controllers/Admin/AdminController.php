@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreAdminRequest;
+use App\Http\Requests\Admin\CreateAdminRequest;
 use App\Http\Resources\AdminResource;
 use App\Services\Admin\CreateAdminService;
 use App\DTOs\Admin\CreateAdminDTO;
@@ -11,7 +11,7 @@ use App\DTOs\Admin\CreateAdminDTO;
 class AdminController extends Controller
 {
     public function store(
-        StoreAdminRequest $request,
+        CreateAdminRequest $request,
         CreateAdminService $service
     ) {
         $dto = CreateAdminDTO::fromRequest($request->validated());
