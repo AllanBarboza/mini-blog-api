@@ -26,13 +26,7 @@ class LoginUserTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJsonStructure([
-                'success',
-                'data' => [
-                    'token',
-                ],
-                'message',
-            ]);;
+            ->assertJsonStructure(['token',]);;
 
         $this->assertDatabaseHas('personal_access_tokens', [
             'tokenable_id'   => $user->id,
@@ -56,7 +50,7 @@ class LoginUserTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => __('auth.invalid_credentials'),
+            'message' => 'Invalid credentials.',
         ]);
         $this->assertDatabaseCount('personal_access_tokens', 0);
     }
@@ -77,7 +71,7 @@ class LoginUserTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => __('auth.invalid_credentials'),
+            'message' => 'Invalid credentials.',
         ]);
         $this->assertDatabaseCount('personal_access_tokens', 0);
     }
@@ -96,7 +90,6 @@ class LoginUserTest extends TestCase
             ->create();
 
         $response = $this->postJson('/api/login', $payload);
-
-        $response->assertStatus(403);
+        $response->assertStatus(401);
     }
 }

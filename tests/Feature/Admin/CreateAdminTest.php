@@ -32,16 +32,14 @@ class CreateAdminTest extends TestCase
 
         $response
             ->assertStatus(201)
-            ->assertJsonPath('data.name', $payload['name'])
-            ->assertJsonPath('data.username', $payload['username'])
-            ->assertJsonMissingPath('data.password')
+            ->assertJsonPath('name', $payload['name'])
+            ->assertJsonPath('username', $payload['username'])
+            ->assertJsonMissingPath('password')
             ->assertJsonStructure([
-                'data' => [
-                    'id',
-                    'name',
-                    'username',
-                    'created_at',
-                ],
+                'id',
+                'name',
+                'username',
+                'created_at',
             ]);
 
         $this->assertDatabaseHas('admins', [

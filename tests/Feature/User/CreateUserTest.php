@@ -23,18 +23,16 @@ class CreateUserTest extends TestCase
 
         $response
             ->assertStatus(201)
-            ->assertJsonPath('data.name', $payload['name'])
-            ->assertJsonPath('data.username', $payload['username'])
-            ->assertJsonPath('data.bio', null)
-            ->assertJsonMissingPath('data.password')
+            ->assertJsonPath('name', $payload['name'])
+            ->assertJsonPath('username', $payload['username'])
+            ->assertJsonPath('bio', null)
+            ->assertJsonMissingPath('password')
             ->assertJsonStructure([
-                'data' => [
-                    'id',
-                    'name',
-                    'username',
-                    'bio',
-                    'created_at',
-                ],
+                'id',
+                'name',
+                'username',
+                'bio',
+                'created_at',
             ]);
 
         $this->assertDatabaseHas('users', [
