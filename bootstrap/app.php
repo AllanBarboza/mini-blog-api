@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 use App\Http\Middleware\ApiResponseMiddleware;
 use App\Exceptions\ExceptionRegister;
+use App\Http\Middleware\RejectBannedUser;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->appendToGroup('api', ApiResponseMiddleware::class);
+        $middleware->alias([
+            'banned.user' => RejectBannedUser::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         ExceptionRegister::register($exceptions);
