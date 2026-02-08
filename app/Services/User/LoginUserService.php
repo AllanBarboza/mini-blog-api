@@ -4,8 +4,8 @@ namespace App\Services\User;
 
 use App\Models\User;
 use App\DTOs\User\LoginUserDTO;
-use App\Exceptions\InvalidCredentialsException;
 use App\Exceptions\UserBannedException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Hash;
 
 class LoginUserService
@@ -14,11 +14,11 @@ class LoginUserService
     {
         $user = User::where('username', $dto->username)->first();
         if (! $user || ! Hash::check($dto->password, $user->password)) {
-            throw new InvalidCredentialsException();
+            throw new AuthenticationException('Invalid credentials.');
         }
 
         if ($user->banned_at !== null) {
-            throw new UserBannedException();
+            throw new AuthenticationException('banned user.');
         }
 
         $token = $user->createToken(
