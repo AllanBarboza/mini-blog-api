@@ -28,8 +28,13 @@ class LoginAdminTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJsonStructure([
-                'token',
-            ]);
+                'success',
+                'data' => [
+                    'token',
+                ],
+                'message',
+            ]);;
+
 
         $this->assertDatabaseHas('personal_access_tokens', [
             'tokenable_id'   => $admin->id,
@@ -53,7 +58,7 @@ class LoginAdminTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Invalid credentials.'
+            'message' => __('auth.invalid_credentials'),
         ]);
         $this->assertDatabaseCount('personal_access_tokens', 0);
     }
@@ -75,7 +80,7 @@ class LoginAdminTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Invalid credentials.'
+            'message' => __('auth.invalid_credentials'),
         ]);
         $this->assertDatabaseCount('personal_access_tokens', 0);
     }

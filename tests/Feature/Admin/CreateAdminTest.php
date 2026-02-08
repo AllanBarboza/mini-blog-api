@@ -94,7 +94,7 @@ class CreateAdminTest extends TestCase
         ]);
 
         $response
-            ->assertStatus(422)
+            ->assertStatus(409)
             ->assertJsonValidationErrors(['username']);
     }
 
