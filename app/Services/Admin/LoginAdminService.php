@@ -5,7 +5,7 @@ namespace App\Services\Admin;
 use App\DTOs\Admin\LoginAdminDTO;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\AuthenticationException;
+use App\Exceptions\InvalidCredentialsException;
 
 class LoginAdminService
 {
@@ -13,7 +13,7 @@ class LoginAdminService
     {
         $admin = Admin::where('username', $dto->username)->first();
         if (! $admin || ! Hash::check($dto->password, $admin->password)) {
-            throw new AuthenticationException('Invalid credentials.');
+            throw new InvalidCredentialsException();
         }
 
         $token = $admin->createToken(
