@@ -12,8 +12,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/users', [UserController::class, 'store']);
-Route::post('/login', [UserAuthController::class, 'login'])
-    ->middleware('banned.user');
+Route::post('/login', [UserAuthController::class, 'login']);
 
 Route::post('/admins', [AdminController::class, 'store'])
     ->middleware('auth:sanctum', 'can:is-admin');
