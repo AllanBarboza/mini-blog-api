@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\LoginAdminRequest;
 use App\Services\Admin\LoginAdminService;
 use App\DTOs\Admin\LoginAdminDTO;
+use App\Http\Resources\AuthResource;
 use Illuminate\Http\JsonResponse;
 
 class AdminAuthController extends Controller
@@ -18,8 +19,8 @@ class AdminAuthController extends Controller
 
         $token = $service->execute($dto);
 
-        return response()->json([
-            'token' => $token,
-        ]);
+        return (new AuthResource($token))
+            ->response()
+            ->setStatusCode(200);
     }
 }

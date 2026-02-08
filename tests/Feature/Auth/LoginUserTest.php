@@ -90,8 +90,8 @@ class LoginUserTest extends TestCase
         ];
 
         User::factory()
-            ->withPassword($payload['password'])
             ->withUsername($payload['username'])
+            ->withPassword($payload['password'])
             ->banned()
             ->create();
 
