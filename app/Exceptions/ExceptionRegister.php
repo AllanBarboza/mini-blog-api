@@ -7,7 +7,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
-use Illuminate\Http\JsonResponse;
 use Throwable;
 
 class ExceptionRegister
@@ -27,35 +26,33 @@ class ExceptionRegister
             ], 401);
         });
 
+        $exceptions->renderable(function (UserBannedException $e) {
+            return response()->json([
+                'message' => $e->getMessage() ?: __('auth.user_banned'),
+            ], 403);
+        });
+
         $exceptions->renderable(function (AuthenticationException $e) {
             return response()->json([
-                'success' => false,
                 'message' => $e->getMessage() ?: __('api.errors.unauthenticated'),
-                'data' => null,
             ], 401);
         });
 
         $exceptions->renderable(function (AuthorizationException $e) {
             return response()->json([
-                'success' => false,
                 'message' => $e->getMessage() ?: __('api.errors.unauthorized'),
-                'data' => null,
             ], 403);
         });
 
         $exceptions->renderable(function (ModelNotFoundException $e) {
             return response()->json([
-                'success' => false,
                 'message' => $e->getMessage() ?: __('api.errors.not_found'),
-                'data' => null,
             ], 404);
         });
 
         $exceptions->renderable(function (HttpExceptionInterface $e) {
             return response()->json([
-                'success' => false,
                 'message' => $e->getMessage() ?: __('api.errors.http_error'),
-                'data' => null,
             ], $e->getStatusCode());
         });
 
@@ -63,9 +60,7 @@ class ExceptionRegister
             report($e);
 
             return response()->json([
-                'success' => false,
                 'message' => $e->getMessage() ?: __('api.errors.internal_server_error'),
-                'data' => null,
             ], 500);
         });
     }
