@@ -16,12 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->appendToGroup('api', ApiResponseMiddleware::class);
         $middleware->alias([
             'banned.user' => RejectBannedUser::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        ExceptionRegister::register($exceptions);
-    })
+    ->withExceptions(function (Exceptions $exceptions): void {})
     ->create();

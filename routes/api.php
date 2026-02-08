@@ -16,6 +16,8 @@ Route::post('/login', [UserAuthController::class, 'login'])
     ->middleware('banned.user');
 
 Route::post('/admins', [AdminController::class, 'store'])
-    ->middleware('auth:sanctum', 'can:create-admin');
+    ->middleware('auth:sanctum', 'can:is-admin');
 
 Route::post('/admins/login', [AdminAuthController::class, 'login']);
+Route::patch('/admins/users/{id}/ban', [AdminController::class, 'banUser'])
+    ->middleware('auth:sanctum', 'can:is-admin');
