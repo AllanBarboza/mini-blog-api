@@ -31,6 +31,13 @@ class UserFactory extends Factory
         ]));
     }
 
+    public function withUsername(string $username): static
+    {
+        return $this->state(fn() => [
+            'username' => $username,
+        ]);
+    }
+
     public function withPassword(string $password): static
     {
         return $this->state(fn() => [
