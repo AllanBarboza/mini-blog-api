@@ -28,3 +28,5 @@ Route::post('/posts', [PostController::class, 'store'])
 
 Route::post('/posts/{id}/comments', [CommentController::class, 'store'])
     ->middleware('auth:sanctum');
+Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])
+    ->middleware('auth:sanctum');
