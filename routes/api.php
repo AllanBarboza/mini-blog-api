@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\User\UserAuthController;
 
@@ -24,3 +25,6 @@ Route::patch('/admins/users/{id}/ban', [AdminController::class, 'banUser'])
 
 Route::post('/posts', [PostController::class, 'store'])
     ->middleware('auth:sanctum', 'can:user');;
+
+Route::post('/posts/{id}/comments', [CommentController::class, 'store'])
+    ->middleware('auth:sanctum');
