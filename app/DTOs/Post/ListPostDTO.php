@@ -12,6 +12,7 @@ class ListPostDTO
         public ?string $createdFrom,
         public ?string $createdTo,
         public int $perPage,
+        public bool $includeComments,
         public $actor,
     ) {}
 
@@ -25,6 +26,7 @@ class ListPostDTO
             $data['created_from'] ?? null,
             $data['created_to'] ?? null,
             $data['per_page'] ?? 15,
+            $data['$includeComments'] ?? true,
             $actor
         );
     }

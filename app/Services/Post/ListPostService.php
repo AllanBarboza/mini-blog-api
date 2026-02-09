@@ -3,6 +3,7 @@
 namespace App\Services\Post;
 
 use App\DTOs\Post\ListPostDTO;
+use App\Models\Admin;
 use App\Models\Post;
 
 class ListPostService
@@ -13,7 +14,11 @@ class ListPostService
             ->with(['user'])
             ->latest();
 
-        if (!$dto->actor || !$dto->actor instanceof \App\Models\Admin) {
+        if ($dto->includeComments) {
+            $query->with('comments');
+        }
+
+        if (!$dto->actor || !$dto->actor instanceof Admin) {
             $query->published()
                 ->whereHas(
                     'user',
@@ -51,6 +56,8 @@ class ListPostService
         if ($dto->createdTo) {
             $query->whereDate('created_at', '<=', $dto->createdTo);
         }
+
+        $query->withCount('comments');
 
         return $query->paginate($dto->perPage);
     }

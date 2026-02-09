@@ -15,6 +15,16 @@ class PostResource extends JsonResource
             'status' => $this->status,
             'published_at' => $this->published_at,
             'content' => $this->content,
+            'comments_count' => $this->comments_count,
+            'comments' => $this->whenLoaded('comments', function () {
+                return $this->comments->map(fn($comment) => [
+                    'content' => $comment->content,
+                    'user' => [
+                        'id' => $comment->user->id,
+                        'name' => $comment->user->name,
+                    ],
+                ]);
+            }),
             'author' => [
                 'id' => $this->user->id,
                 'name' => $this->user->name,
