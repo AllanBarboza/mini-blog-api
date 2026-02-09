@@ -53,4 +53,9 @@ class Post extends Model
     {
         return $query->where('status', 'archived');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

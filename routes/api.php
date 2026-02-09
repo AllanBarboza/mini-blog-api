@@ -13,6 +13,7 @@ use App\Http\Controllers\CommentController;
 Route::post('/users', [UserController::class, 'store']);
 Route::post('/login', [UserAuthController::class, 'login']);
 Route::post('/admins/login', [AdminAuthController::class, 'login']);
+Route::get('/posts', [PostController::class, 'list']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
