@@ -16,19 +16,14 @@ Route::post('/admins/login', [AdminAuthController::class, 'login']);
 Route::get('/posts', [PostController::class, 'list']);
 
 Route::middleware('auth:sanctum')->group(function () {
-
-    Route::get('/me', function (Request $request) {
-        return $request->user();
-    });
-
     Route::middleware('can:user')->group(function () {
         Route::post('/posts', [PostController::class, 'store']);
+        Route::patch('/posts/{post}', [PostController::class, 'update']);
     });
 
     Route::prefix('admins')
         ->middleware('can:admin')
         ->group(function () {
-
             Route::post('/', [AdminController::class, 'store']);
             Route::patch('/users/{id}/ban', [AdminController::class, 'banUser']);
         });
