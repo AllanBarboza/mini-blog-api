@@ -23,7 +23,7 @@ class BanUserTest extends TestCase
 
         $user = User::factory()->create();
 
-        $response = $this->patchJson("/api/admins/users/{$user->id}/ban");
+        $response = $this->patchJson("/api/admin/users/{$user->id}/ban");
 
         $response->assertStatus(204);
 
@@ -40,7 +40,7 @@ class BanUserTest extends TestCase
 
         $user = User::factory()->create();
 
-        $response = $this->patchJson("/api/admins/users/{$user->id}/ban");
+        $response = $this->patchJson("/api/admin/users/{$user->id}/ban");
 
         $response->assertStatus(403);
 
@@ -61,7 +61,7 @@ class BanUserTest extends TestCase
 
         $originalBannedAt = $user->banned_at;
 
-        $response = $this->patchJson("/api/admins/users/{$user->id}/ban");
+        $response = $this->patchJson("/api/admin/users/{$user->id}/ban");
 
 
         $response->assertStatus(409);
@@ -79,7 +79,7 @@ class BanUserTest extends TestCase
 
         $nonExistentUserId = 9999;
 
-        $response = $this->patchJson("/api/admins/users/{$nonExistentUserId}/ban");
+        $response = $this->patchJson("/api/admin/users/{$nonExistentUserId}/ban");
 
         $response->assertStatus(404);
         $response->assertJson([

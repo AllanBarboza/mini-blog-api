@@ -7,11 +7,13 @@ use App\DTOs\Post\ListPostDTO;
 use App\DTOs\Post\UpdatePostDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\CreatePostRequest;
+use App\Http\Requests\Post\DeletePostRequest;
 use App\Http\Requests\Post\ListPostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Services\Post\CreatePostService;
+use App\Services\Post\DeletePostService;
 use App\Services\Post\ListPostService;
 use App\Services\Post\UpdatePostService;
 
@@ -54,5 +56,12 @@ class PostController extends Controller
         $updatedPost = $service->execute($dto, $post);
 
         return new PostResource($updatedPost);
+    }
+
+    public function destroy(DeletePostRequest $request, Post $post, DeletePostService $service)
+    {
+        $service->execute($post);
+
+        return response()->json([], 204);
     }
 }

@@ -12,7 +12,7 @@ use App\Http\Controllers\CommentController;
 
 Route::post('/users', [UserController::class, 'store']);
 Route::post('/login', [UserAuthController::class, 'login']);
-Route::post('/admins/login', [AdminAuthController::class, 'login']);
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
 Route::get('/posts', [PostController::class, 'list']);
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -21,11 +21,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/posts/{post}', [PostController::class, 'update']);
     });
 
-    Route::prefix('admins')
+    Route::prefix('admin')
         ->middleware('can:admin')
         ->group(function () {
             Route::post('/', [AdminController::class, 'store']);
             Route::patch('/users/{id}/ban', [AdminController::class, 'banUser']);
+            Route::delete('/posts/{post}', [PostController::class, 'destroy']);
         });
 
 

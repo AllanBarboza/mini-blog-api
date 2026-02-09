@@ -23,7 +23,7 @@ class LoginAdminTest extends TestCase
             ->withPassword($payload['password'])
             ->create();
 
-        $response = $this->postJson('/api/admins/login', $payload);
+        $response = $this->postJson('/api/admin/login', $payload);
         $response
             ->assertStatus(200)
             ->assertJsonStructure(['token']);
@@ -47,7 +47,7 @@ class LoginAdminTest extends TestCase
             ->withPassword(fake()->password(8))
             ->create();
 
-        $response = $this->postJson('/api/admins/login', $payload);
+        $response = $this->postJson('/api/admin/login', $payload);
 
         $response->assertStatus(401);
         $response->assertJson([
@@ -69,7 +69,7 @@ class LoginAdminTest extends TestCase
             ->create();
 
 
-        $response = $this->postJson('/api/admins/login', $payload);
+        $response = $this->postJson('/api/admin/login', $payload);
 
         $response->assertStatus(401);
         $response->assertJson([

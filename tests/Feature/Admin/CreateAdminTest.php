@@ -28,7 +28,7 @@ class CreateAdminTest extends TestCase
 
         ];
 
-        $response = $this->postJson('/api/admins', $payload);
+        $response = $this->postJson('/api/admin', $payload);
 
         $response
             ->assertStatus(201)
@@ -62,7 +62,7 @@ class CreateAdminTest extends TestCase
             'password' => fake()->password(8)
         ];
 
-        $this->postJson('/api/admins', $payload);
+        $this->postJson('/api/admin', $payload);
 
         $admin = Admin::where('username', $payload['username'])->first();
 
@@ -85,7 +85,7 @@ class CreateAdminTest extends TestCase
             'username' => $username,
         ]);
 
-        $response = $this->postJson('/api/admins', [
+        $response = $this->postJson('/api/admin', [
             'name' => fake()->name(),
             'username' => $username,
             'password' => fake()->password()
@@ -103,7 +103,7 @@ class CreateAdminTest extends TestCase
             ['*']
         );
 
-        $response = $this->postJson('/api/admins', []);
+        $response = $this->postJson('/api/admin', []);
 
         $response
             ->assertStatus(422)
@@ -123,7 +123,7 @@ class CreateAdminTest extends TestCase
 
         ];
 
-        $response = $this->postJson('/api/admins', $payload);
+        $response = $this->postJson('/api/admin', $payload);
         $response->assertStatus(401);
     }
     public function test_user_cannot_create_admin(): void
@@ -140,7 +140,7 @@ class CreateAdminTest extends TestCase
 
         ];
 
-        $response = $this->postJson('/api/admins', $payload);
+        $response = $this->postJson('/api/admin', $payload);
         $response->assertStatus(403);
     }
 }
